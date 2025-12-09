@@ -1,0 +1,38 @@
+﻿@model UserPortalValdiationsDBContext.ViewModels.AddressViewModel
+
+<h2>Add Address</h2>
+
+<form asp-action="AddAddress" method="post">
+    <input type="hidden" asp-for="UserId" />
+
+    <div class="mb-3">
+        <label asp-for="Line1" class="form-label">Address Line 1 *</label>
+        <input asp-for="Line1" class="form-control" />
+        <span asp-validation-for="Line1" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City" class="form-label">City *</label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="State" class="form-label">State *</label>
+        <input asp-for="State" class="form-control" />
+        <span asp-validation-for="State" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Pin" class="form-label">PIN *</label>
+        <input asp-for="Pin" class="form-control" />
+        <span asp-validation-for="Pin" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+    <a asp-action="UserAddresses" asp-route-userId="@Model.UserId" class="btn btn-secondary ms-2">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

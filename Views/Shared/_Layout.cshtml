@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment Env
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UserPortalPOC - @ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        .navbar.small-nav {
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+        }
+
+        .navbar {
+            padding: 4px 10px;
+            box-shadow: 0 2px 3px skyblue;
+        }
+
+        .profile-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top small-nav"
+         style="background: linear-gradient(90deg, #0072ff, #00c6ff);">
+
+        <div class="container">
+            <a class="navbar-brand text-white" href="/">UserPortalPOC</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav ms-auto">
+
+                    @*
+                      CASE 1: Before Login (User NOT authenticated)
+                      Show: Register, Login, Contact
+                    *@
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        if (ViewBag.Title != "Login")    // HIDE Register + Login on Login Page
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Account" asp-action="Register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                        }
+
+                        <!-- Contact always visible before login -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
+                    }
+
+                    @*
+                      CASE 2: After Login (User authenticated)
+                      Show: Dashboard, Contact, Profile Icon with dropdown
+                    *@
+                    else
+                    {
+                        <ul class="navbar-nav ms-auto">
+
+                           
+                                <!-- AFTER LOGIN: Show ONLY Contact + Logout -->
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-controller="Contact" asp-action="Index">Contact</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                        <button class="btn btn-link nav-link text-danger">Logout</button>
+                                    </form>
+                                </li>
+                            
+
+
+                        </ul>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-3">
+        &copy; @DateTime.Now.Year UserPortalPOC. All Rights Reserved.
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/custom-validation.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+

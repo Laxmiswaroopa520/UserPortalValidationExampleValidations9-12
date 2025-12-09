@@ -1,0 +1,112 @@
+﻿@model UserPortalValdiationsDBContext.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    body {
+        background: url('https://images.unsplash.com/photo-1507152832244-10d45c7c5d99?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .login-container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-card {
+        width: 380px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(5px);
+    }
+
+    .login-title {
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .login-logo {
+        width: 80px;
+        display: block;
+        margin: 0 auto 20px auto;
+    }
+
+    .form-control-lg {
+        height: 50px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        font-size: 1.1rem;
+        padding: 0.75rem;
+        border-radius: 50px;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/5087/5087579.png" class="login-logo" />
+
+        <h2 class="login-title">Welcome Back</h2>
+
+        <form asp-action="Login" method="post" id="loginForm" autocomplete="off">
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label fw-bold"></label>
+                <input asp-for="Username"
+                       class="form-control form-control-lg rounded-pill shadow-sm"
+                       autocomplete="off" />
+                <span asp-validation-for="Username" class="text-danger small"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4 position-relative">
+                <label asp-for="Password" class="form-label fw-bold"></label>
+
+                <div style="position: relative;">
+                    <input asp-for="Password"
+                           type="password"
+                           class="form-control form-control-lg rounded-pill shadow-sm"
+                           id="passwordInput"
+                           autocomplete="new-password" />
+
+                    <span id="passwordEmoji"
+                          style="position: absolute; right: 15px; top: 50%;
+                                 transform: translateY(-50%); font-size: 26px; cursor: pointer;">
+                    </span>
+                </div>
+
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <button class="btn btn-primary w-100 mt-2">Login</button>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/password-emoji.js"></script>
+}
+
+
+
+
+
+
+
+
+
+       

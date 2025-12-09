@@ -1,0 +1,240 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+@model UserPortalValdiationsDBContext.Models.ContactModel
+@{
+    ViewBag.Title = "Contact";
+}
+
+<h2>Contact Us</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}
+
+<form asp-action="Index" method="post">
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Message" class="form-label"></label>
+        <textarea asp-for="Message" class="form-control"></textarea>
+    </div>
+    <button class="btn btn-primary">Send</button>
+</form>
+
+<h3 class="mt-4">Messages</h3>
+<table class="table">
+    <thead><tr><th>#</th><th>Email</th><th>Message</th></tr></thead>
+    <tbody>
+        @foreach (var c in (ViewBag.Contacts as List<UserPortalValdiationsDBContext.Models.ContactModel> ?? new List<UserPortalValdiationsDBContext.Models.ContactModel>()))
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.Email</td>
+                <td>@c.Message</td>
+            </tr>
+        }
+    </tbody>
+</table>
+*@
+@model UserPortalValdiationsDBContext.Models.ContactModel
+@{
+    ViewBag.Title = "Contact";
+}
+
+<!-- It loads Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f0f3f8;
+        margin: 0;
+        padding: 30px;
+    }
+
+    h2, h3 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Success alert */
+    .alert-success {
+        background: #d4f7dc;
+        padding: 12px 20px;
+        border-left: 6px solid #42b36a;
+        color: #2f7c4d;
+        border-radius: 6px;
+        max-width: 600px;
+        margin: 0 auto 20px auto;
+        font-size: 15px;
+    }
+
+    /* Card container  white rounded card containing the form*/
+    .contact-card {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 25px 30px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Input wrapper with icon  ::i positioned inside the input(left) to show an icon. */
+    .input-box {
+        position: relative;
+        margin-bottom: 22px;
+    }
+
+    .input-box i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #777;
+        font-size: 16px;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 12px 14px 12px 38px;
+        border: 1px solid #ccc;
+        background: #fdfdfd;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: 0.2s ease-in-out;
+    }
+
+    input:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #4a8be1;
+        box-shadow: 0 0 6px rgba(74,139,225,0.25);
+        background: #fff;
+    }
+
+    textarea {
+        height: 120px;
+        resize: vertical;
+    }
+
+    /* Labels */
+    label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+        color: #444;
+    }
+
+    /* Button */
+    .btn-send {
+        width: 100%;
+        background: #4a8be1;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        letter-spacing: 0.6px;
+        transition: 0.2s;
+    }
+
+    .btn-send:hover {
+        background: #2f6dc7;
+    }
+
+    /* Table Card */
+    .message-card {
+        max-width: 750px;
+        margin: 40px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 14px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+    }
+
+    th {
+        background: #f3f3f3;
+        padding: 12px;
+        text-align: left;
+        border-bottom: 2px solid #ddd;
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    tr:hover {
+        background: #f9f9f9;
+    }
+</style>
+
+<h2>Contact Us</h2>
+<!--success : it will display message with check mark-->
+@if (ViewBag.Message != null)
+{
+    <div class="alert-success">
+        <i class="fa-solid fa-circle-check"></i> @ViewBag.Message               
+    </div>
+}
+
+<div class="contact-card">
+    <form asp-action="Index" method="post">
+
+        <!-- EMAIL -->
+        <div class="input-box">
+            <label asp-for="Email"></label>
+            <i class="fa-solid fa-envelope"></i>
+            <input asp-for="Email" type="text" />
+        </div>
+
+        <!-- MESSAGE -->
+        <div class="input-box">
+            <label asp-for="Message"></label>
+            <i class="fa-solid fa-message"></i>
+            <textarea asp-for="Message"></textarea>
+        </div>
+
+        <button class="btn-send"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+    </form>
+</div>
+
+<h3>Messages</h3>
+
+<div class="message-card">
+    <table>
+        <thead>
+            <tr>
+                <th><i class="fa-solid fa-hashtag"></i> ID</th>
+                <th><i class="fa-solid fa-envelope"></i> Email</th>
+                <th><i class="fa-solid fa-comment"></i> Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- try to get contacts list ..If not available,use an empty list--> <!--prevents null reference exception:: if it is null ,replace it with an empty list-->
+            @foreach (var c in (ViewBag.Contacts as List<UserPortalValdiationsDBContext.Models.ContactModel> ?? new List<UserPortalValdiationsDBContext.Models.ContactModel>()))   
+            {
+                <tr>
+                    <td>@c.Id</td>
+                    <td>@c.Email</td>
+                    <td>@c.Message</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
