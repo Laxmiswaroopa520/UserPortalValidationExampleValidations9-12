@@ -1,0 +1,32 @@
+﻿@model UserPortalValdiationsDBContext.ViewModels.UserAddressListViewModel
+
+<h2>@Model.Username's Addresses</h2>
+
+<a asp-action="AddAddress" asp-route-userId="@Model.UserId" class="btn btn-success mb-3">➕ Add Address</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Line1</th>
+            <th>City</th>
+            <th>State</th>
+            <th>PIN</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model.Addresses)
+        {
+            <tr>
+                <td>@a.Line1</td>
+                <td>@a.City</td>
+                <td>@a.State</td>
+                <td>@a.Pin</td>
+                <td>
+                    <a asp-action="EditAddress" asp-route-id="@a.Id" class="btn btn-sm btn-primary">✏️ Edit</a>
+                    <a asp-action="DeleteAddress" asp-route-id="@a.Id" class="btn btn-sm btn-danger">🗑 Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
