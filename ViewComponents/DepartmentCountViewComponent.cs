@@ -1,24 +1,21 @@
-﻿namespace UserPortalValdiationsDBContext.ViewComponents
+﻿using Microsoft.AspNetCore.Mvc;
+using UserPortalValdiationsDBContext.Interfaces;
+
+namespace UserPortalValdiationsDBContext.ViewComponents
 {
-    using global::UserPortalValdiationsDBContext.Services;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Threading.Tasks;
-    using UserPortalValdiationsDBContext.Services;
+    public class DepartmentCountViewComponent : ViewComponent
+    {
+        private readonly IUserService _userService;
 
-   
-        public class DepartmentCountViewComponent : ViewComponent
+        public DepartmentCountViewComponent(IUserService userService)
         {
-            private readonly IUserActivityService _svc;
+            _userService = userService;
+        }
 
-            public DepartmentCountViewComponent(IUserActivityService svc)
-            {
-                _svc = svc;
-            }
-
-            public async Task<IViewComponentResult> InvokeAsync()
-            {
-                var counts = await _svc.GetUserCountByDepartmentAsync();
-                return View(counts);
-            }
+        public IViewComponentResult Invoke()
+        {
+            var data = _userService.GetUserCountByDepartment();
+            return View(data);
         }
     }
+}

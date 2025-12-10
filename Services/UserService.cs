@@ -3,6 +3,7 @@ using UserPortalValdiationsDBContext.Data;
 using UserPortalValdiationsDBContext.Interfaces;
 using UserPortalValdiationsDBContext.Models;
 
+
 namespace UserPortalValdiationsDBContext.Services
 {
     public class UserService : IUserService
@@ -52,5 +53,39 @@ namespace UserPortalValdiationsDBContext.Services
                 Db.SaveChanges();
             }
         }
+
+        public User? GetUserByUsername(string username)
+        {
+            return Db.Users.FirstOrDefault(u => u.Username == username);
+        }
+
+        //for dept count (View Component)
+        public IEnumerable<UserCountByDepartment> GetUserCountByDepartment()
+        {
+            return Db.Users
+                .GroupBy(u => u.Department)
+                .Select(g => new UserCountByDepartment
+                {
+                    Department = g.Key,
+                    Count = g.Count()
+                })
+                .ToList();
+        }
+        //for view model(View Component)
+        public IEnumerable<User> GetUpcomingBirthdays()
+        {
+            var today = DateTime.Today;
+
+            // Use DateOfBirth instead of BirthDate
+            return Db.Users
+                     .Where(u => u.DateOfBirth != null &&
+                                 u.DateOfBirth.Month == today.Month &&
+                                 u.DateOfBirth.Day >= today.Day)
+                     .OrderBy(u => u.DateOfBirth.Day)
+                     .ToList();
+        }
+
+
+
     }
 }
