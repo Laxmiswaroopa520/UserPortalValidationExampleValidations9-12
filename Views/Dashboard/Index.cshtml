@@ -1,9 +1,29 @@
 ﻿@model IEnumerable<UserPortalValdiationsDBContext.Models.User>
+
 @{
     ViewBag.Title = "Dashboard";
 }
 
 <h2 class="mb-3">Users</h2>
+
+<!-- VIEW COMPONENTS ADDED HERE -->
+<div class="row mb-4">
+
+    <div class="col-md-4">
+        @await Component.InvokeAsync("UserProfileSidebar")
+    </div>
+
+    <div class="col-md-4">
+        @await Component.InvokeAsync("UserCount")
+    </div>
+
+    <div class="col-md-4">
+        @await Component.InvokeAsync("UpcomingBirthdays")
+    </div>
+
+</div>
+
+<!-- ORIGINAL CODE BELOW — NOT REMOVED -->
 
 <div class="mb-3 d-flex justify-content-between align-items-center">
     <a class="btn btn-success"
@@ -11,7 +31,6 @@
         ➕ Add New User
     </a>
 
-    <!-- Logout Button -->
     <form asp-controller="Account" asp-action="Logout" method="post">
         <button type="submit" class="btn btn-danger">
             🔒 Logout
