@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserPortalValdiationsDBContext")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bf8b4b7e2fcbe40de2592f6da9253ae1b692625")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserPortalValdiationsDBContext")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserPortalValdiationsDBContext")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

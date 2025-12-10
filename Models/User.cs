@@ -31,12 +31,12 @@ namespace UserPortalValdiationsDBContext.Models
 
         // PHONE NUMBER
         [PhoneNumber]
-       [NoSequentialDigits]
-     public string? Phone { get; set; }
+        [NoSequentialDigits]
+        public string? Phone { get; set; }
 
         // GENDER
         [Required]
-        public string? Gender { get; set; }  // Male, Female, Other
+        public string? Gender { get; set; }
 
         // DATE OF BIRTH
         [Required]
@@ -47,11 +47,30 @@ namespace UserPortalValdiationsDBContext.Models
         [Required(ErrorMessage = "Please select a country.")]
         public string? Country { get; set; }
 
-        // HOBBIES (comma-separated for DB storage)
+        // HOBBIES
         public string? Hobbies { get; set; }
 
-        // TERMS ACCEPTANCE (not stored usually, optional)
-        // Added only if you want to save it
         public bool AcceptTerms { get; set; }
+
+
+        // -------------------------------------------------------------------
+        // 🔥 NEW FIELDS FOR VIEW COMPONENTS (ADDED WITHOUT REMOVING ANYTHING)
+        // -------------------------------------------------------------------
+
+        public string? ProfilePhotoPath { get; set; } = "/images/profiles/default.png";
+
+        public DateTime? LastLoginAt { get; set; }
+
+        public DateTime? LastPasswordChangeAt { get; set; }
+
+        /// <summary>
+        /// Example: "Admin,Manager,HR"
+        /// </summary>
+        public string? Roles { get; set; } = "User";
+
+        /// <summary>
+        /// For Department Count ViewComponent
+        /// </summary>
+        public string? Department { get; set; } = "General";
     }
 }
