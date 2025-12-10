@@ -1,6 +1,5 @@
-﻿//handles user CRUD Operations
-using UserPortalValdiationsDBContext.Models;
-
+﻿using UserPortalValdiationsDBContext.Models;
+using UserPortalValdiationsDBContext.Services;
 namespace UserPortalValdiationsDBContext.Interfaces
 {
     public interface IUserService
@@ -9,6 +8,9 @@ namespace UserPortalValdiationsDBContext.Interfaces
         User? GetUserById(int id);
         void UpdateUser(User user);
         void DeleteUser(int id);
-    }
+        User? GetUserByUsername(string username);
+        IEnumerable<UserCountByDepartment> GetUserCountByDepartment(); // now matches the moved class view components..
+        IEnumerable<User> GetUpcomingBirthdays();               //for  view components..
 
+    }
 }

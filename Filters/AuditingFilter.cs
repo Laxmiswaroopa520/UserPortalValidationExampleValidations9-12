@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using UserPortalValdiationsDBContext.Services;
-using UserPortalValdiationsDBContext.Services.Interfaces;
+using UserPortalValdiationsDBContext.Interfaces;
 
 namespace UserPortalValdiationsDBContext.Filters
 {
@@ -52,12 +52,12 @@ namespace UserPortalValdiationsDBContext.Filters
     // small DTO, can move to Models/AuditEntry.cs
     public class AuditEntry
     {
-        public string UserName { get; set; }
-        public string Action { get; set; }
+        public string? UserName { get; set; }
+        public string? Action { get; set; }
         public DateTime StartedAt { get; set; }
         public DateTime EndedAt { get; set; }
-        public string HttpMethod { get; set; }
-        public string Path { get; set; }
+        public string? HttpMethod { get; set; }
+        public string? Path { get; set; }
         public bool Success { get; set; }
     }
 }

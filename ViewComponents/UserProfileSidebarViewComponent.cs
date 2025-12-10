@@ -1,49 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UserPortalValdiationsDBContext.Data;
-using UserPortalValdiationsDBContext.Services;
-using UserPortalValdiationsDBContext.ViewModels;
-using Microsoft.EntityFrameworkCore;
+using UserPortalValdiationsDBContext.Interfaces;
+
 public class UserProfileSidebarViewComponent : ViewComponent
 {
-    private readonly ApplicationDbContext _db;
-    private readonly IUserActivityService _userActivity;
+    private readonly IUserService _userService;
 
-    public UserProfileSidebarViewComponent(ApplicationDbContext db, IUserActivityService userActivity)
+    public UserProfileSidebarViewComponent(IUserService userService)
     {
-        _db = db;
-        _userActivity = userActivity;
+        _userService = userService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(int userId)
+    public IViewComponentResult Invoke(string? userId)
     {
-        var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
-        if (user == null)
-            return View("Default", null);
-
-        var recent = await _userActivity.GetRecentLoginsAsync(userId, 5);
-
-        var vm = new UserProfileSidebarViewModel
+        if (string.IsNullOrEmpty(userId))
         {
-            UserId = user.Id,
-            Name = user.Username,
-            Email = user.Email,
-            ProfilePhotoPath = user.ProfilePhotoPath,
-            RecentLogins = recent.ToList(),
-            LastPasswordChangeAt = user.LastPasswordChangeAt,
-            Roles = (user.Roles ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries).ToList(),
-            UpcomingBirthday = NextBirthdayInfo(user.DateOfBirth)
-        };
+            return Content("No user logged in.");
+        }
 
-        return View(vm);
-    }
+        var user = _userService.GetUserByUsername(userId);
+        if (user == null)
+        {
+            return Content("User not found.");
+        }
 
-    private BirthdayInfo NextBirthdayInfo(DateTime dob)
-    {
-        var now = DateTime.UtcNow.Date;
-        var thisYears = new DateTime(now.Year, dob.Month, dob.Day);
-        var next = thisYears >= now ? thisYears : thisYears.AddYears(1);
-        var days = (next - now).Days;
-
-        return new BirthdayInfo { Date = next, DaysUntil = days };
+        return View(user);
     }
 }

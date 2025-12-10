@@ -8,5 +8,8 @@ namespace UserPortalValdiationsDBContext.Interfaces
         bool IsUsernameExists(string username);
         void RegisterUser(User user);
         User? Login(string username, string password);
+        void UpdateUser(User user);
+        
+
     }
 }

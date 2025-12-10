@@ -2,10 +2,125 @@
 using Microsoft.AspNetCore.Mvc;
 using UserPortalValdiationsDBContext.Data;
 using UserPortalValdiationsDBContext.Enums;
+using UserPortalValdiationsDBContext.Filters;  // <-- custom filters
 using UserPortalValdiationsDBContext.Interfaces;
 using UserPortalValdiationsDBContext.Models;
 using UserPortalValdiationsDBContext.ViewModels;
 
+namespace UserPortalValdiationsDBContext.Controllers
+{
+    [ServiceFilter(typeof(LoggingActionFilter))]         // Logs all actions
+    [ServiceFilter(typeof(AuditingFilter))]             // Audits requests
+    [ServiceFilter(typeof(ErrorHandlingFilter))]        // Handles exceptions
+    public class AccountController : Controller
+    {
+        private readonly IAccountService AccountService;
+        private readonly ApplicationDbContext Context;
+
+        public AccountController(IAccountService accountService, ApplicationDbContext context)
+        {
+            AccountService = accountService;
+            Context = context;
+        }
+
+        [HttpGet]
+        [ServiceFilter(typeof(ResultCacheFilter))]        // Cache registration form for performance (optional)
+        public IActionResult Register()
+        {
+            LoadDropdowns();
+            return View(new RegisterViewModel());
+        }
+
+        [HttpPost]
+        [ServiceFilter(typeof(ActionValidationFilter))]   // Validate model automatically
+        public IActionResult Register(RegisterViewModel model)
+        {
+            LoadDropdowns();
+
+            if (AccountService.IsEmailExists(model.Email!))
+            {
+                ModelState.AddModelError("Email", "Email already exists.");
+                return View(model);
+            }
+
+            if (AccountService.IsUsernameExists(model.Username!))
+            {
+                ModelState.AddModelError("Username", "Username already exists.");
+                return View(model);
+            }
+
+            var newUser = model.ToUser();
+            newUser.ProfilePhotoPath = "/images/default-profile.png";
+            newUser.LastLoginAt = DateTime.Now;
+            newUser.LastPasswordChangeAt = DateTime.Now;
+            newUser.Roles = "User";
+
+            AccountService.RegisterUser(newUser);
+            return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult Login() => View();
+
+        [HttpPost]
+        [ServiceFilter(typeof(ActionValidationFilter))]
+        public IActionResult Login(LoginViewModel model)
+        {
+            var user = AccountService.Login(model.Username!, model.Password!);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
+                return View(model);
+            }
+
+            user.LastLoginAt = DateTime.Now;
+            AccountService.UpdateUser(user);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login", "Account");
+        }
+
+        private void LoadDropdowns()
+        {
+            ViewBag.Countries = Enum.GetNames(typeof(CountryEnum)).ToList();
+            ViewBag.HobbiesList = Context.Hobbies.Select(h => h.Name).ToList();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
+using UserPortalValdiationsDBContext.Data;
+using UserPortalValdiationsDBContext.Enums;
+using UserPortalValdiationsDBContext.Interfaces;
+using UserPortalValdiationsDBContext.Models;
+using UserPortalValdiationsDBContext.ViewModels;
 namespace UserPortalValdiationsDBContext.Controllers
 {
     public class AccountController : Controller
@@ -121,7 +236,7 @@ namespace UserPortalValdiationsDBContext.Controllers
     }
 }
 
-
+*/
 
 
 

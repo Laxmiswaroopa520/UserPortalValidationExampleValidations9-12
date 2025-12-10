@@ -1,7 +1,47 @@
 ﻿@*
+    Partial view vs View Component demonstration
+*@
+@model dynamic
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Partial vs ViewComponent demo</h5>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Partial View</h6>
+                <p class="small">
+                    Partial views are simple cshtml fragments that share the parent's ViewData.
+                    They are invoked like this:
+                </p>
+
+                <pre class="bg-light p-2 border">
+@Html.Partial("_MyPartial", (object)Model)
+@await Html.PartialAsync("_MyPartial", (object)Model)
+                </pre>
+            </div>
+
+            <div class="col-md-6">
+                <h6>ViewComponent</h6>
+                <p class="small">
+                    ViewComponents are classes with their own logic and dependencies.
+                    They are invoked like this:
+                </p>
+
+                <pre class="bg-light p-2 border">
+@await Component.InvokeAsync("UserProfileSidebar", new { userId = (int)Model.UserId })
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@* Partial view vs View Component demonstration *@
+@* Partial view vs View Component demonstration 
 @model dynamic
 
 <div class="card">
@@ -12,7 +52,7 @@
             <div class="col-md-6">
                 <h6>Partial View</h6>
                 <p class="small">Partial views are simple cshtml fragments that share the parent's ViewData. They are invoked via <code>@Html.Partial("_MyPartial", model)</code> or <code>@await Html.PartialAsync("_MyPartial")</code>.</p>
-                @* Example partial included below (you would create _MyPartial.cshtml) *@
+                @* Example partial included below (you would create _MyPartial.cshtml) 
             </div>
             <div class="col-md-6">
                 <h6>ViewComponent</h6>
@@ -21,3 +61,4 @@
         </div>
     </div>
 </div>
+*@   
