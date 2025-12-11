@@ -1,29 +1,24 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
 using UserPortalValdiationsDBContext.Data;
 using UserPortalValdiationsDBContext.Filters;
-using UserPortalValdiationsDBContext.Interfaces;
-using UserPortalValdiationsDBContext.Services;
+using UserPortalValdiationsDBContext.Repository.Interfaces;
+using UserPortalValdiationsDBContext.Repository.Implementations;
+using UserPortalValdiationsDBContext.Services.Interfaces;
+using UserPortalValdiationsDBContext.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ---------------------------
-// Add Controllers with Global Filters
-// ---------------------------
+// Controllers + Global Filters
 builder.Services.AddControllersWithViews(options =>
 {
-    // Global filters
-    options.Filters.Add<ErrorHandlingFilter>();      // Global exception handling
-    options.Filters.Add<LoggingActionFilter>();      // Logs all actions
-    options.Filters.Add<ResponseResultFilter>();     // Wrap API responses in standard format
-    options.Filters.Add<ActionValidationFilter>();   // Validate ModelState globally
+    options.Filters.Add<ErrorHandlingFilter>();
+    options.Filters.Add<LoggingActionFilter>();
+    options.Filters.Add<ResponseResultFilter>();
+    options.Filters.Add<ActionValidationFilter>();
 });
 
-// ---------------------------
 // Authentication
-// ---------------------------
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -31,54 +26,43 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/Account/Logout";
     });
 
-// ---------------------------
-// Database Context
-// ---------------------------
+// DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ---------------------------
-// App Services
-// ---------------------------
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAddressService, AddressService>();
+// Repository & Unit Of Work Registrations
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IHobbyRepository, HobbyRepository>();
+
+
+// Services (Business Layer)
+
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IContactService, ContactService>();
-builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserActivityService, UserActivityService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
 
-// ---------------------------
-// Filters with Dependency Injection
-// ---------------------------
 
-// LoggingActionFilter depends on ILogger<LoggingActionFilter> (automatically provided by DI)
+// Filters
 builder.Services.AddScoped<LoggingActionFilter>();
-
-// AuditingFilter depends on IAuditService and ILogger<AuditingFilter> (ILogger automatically injected)
 builder.Services.AddScoped<AuditingFilter>();
-
-// ErrorHandlingFilter depends on ILogger<ErrorHandlingFilter>
 builder.Services.AddScoped<ErrorHandlingFilter>();
-
-// ActionValidationFilter has no dependencies
 builder.Services.AddScoped<ActionValidationFilter>();
-
-// ResultCacheFilter depends on IMemoryCache; default duration = 10 sec
-builder.Services.AddMemoryCache(); // required for ResultCacheFilter
+builder.Services.AddScoped<ResponseResultFilter>();
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<ResultCacheFilter>();
 
-// ResponseResultFilter has no dependencies (or inject what it needs)
-builder.Services.AddScoped<ResponseResultFilter>();
-
-// ---------------------------
-// Supporting Services
-// ---------------------------
-builder.Services.AddSingleton<ICacheService, CacheService>();
-builder.Services.AddSingleton<IAuditService, AuditService>();
-
-// ---------------------------
-// Build and Configure App
-// ---------------------------
+// Build & pipeline
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -92,12 +76,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Register}/{id?}");
 
 app.Run();
+
+
+
+
 
 
 
