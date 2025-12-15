@@ -1,0 +1,262 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\views\\account\\verifyotp.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:views\\account\\verifyotp.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\viewmodels\\verifyotpviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:viewmodels\\verifyotpviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\repository\\implementations\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:repository\\implementations\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\repository\\interfaces\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:repository\\interfaces\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\services\\implementations\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:services\\implementations\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\services\\interfaces\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:services\\interfaces\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\services\\implementations\\twiliosmsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:services\\implementations\\twiliosmsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\models\\config\\twiliosettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:models\\config\\twiliosettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\models\\contactmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:models\\contactmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|c:\\users\\dell\\source\\repos\\userportalvalidationexamplevalidations9-12\\userportalvaldiationsdbcontext.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{EF72F4BF-4BCB-A277-F6C0-38607CBC2871}|UserPortalValdiationsDBContext.csproj|solutionrelative:userportalvaldiationsdbcontext.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "VerifyOtpViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\ViewModels\\VerifyOtpViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\VerifyOtpViewModel.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\ViewModels\\VerifyOtpViewModel.cs",
+              "RelativeToolTip": "ViewModels\\VerifyOtpViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T19:14:00.347Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VerifyOtp.cshtml",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Views\\Account\\VerifyOtp.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\VerifyOtp.cshtml",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Views\\Account\\VerifyOtp.cshtml",
+              "RelativeToolTip": "Views\\Account\\VerifyOtp.cshtml",
+              "ViewState": "AgIAABMAAACAMjMzMzMbwCYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T19:11:56.472Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AccountRepository.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Repository\\Implementations\\AccountRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Implementations\\AccountRepository.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Repository\\Implementations\\AccountRepository.cs",
+              "RelativeToolTip": "Repository\\Implementations\\AccountRepository.cs",
+              "ViewState": "AgIAABoAAAAAMzMzM/MowDQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T19:11:00.126Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAAOsAAADAMjMzMzMwwNAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:54:15.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAccountRepository.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Repository\\Interfaces\\IAccountRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Interfaces\\IAccountRepository.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Repository\\Interfaces\\IAccountRepository.cs",
+              "RelativeToolTip": "Repository\\Interfaces\\IAccountRepository.cs",
+              "ViewState": "AgIAAAEAAAAgMzMzMzMrwA4AAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T19:10:29.458Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Services\\Implementations\\AccountService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\AccountService.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Services\\Implementations\\AccountService.cs",
+              "RelativeToolTip": "Services\\Implementations\\AccountService.cs",
+              "ViewState": "AgIAACsAAAAAMTMzMzMvwDoAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:59:10.787Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IAccountService.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Services\\Interfaces\\IAccountService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IAccountService.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Services\\Interfaces\\IAccountService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\IAccountService.cs",
+              "ViewState": "AgIAAAoAAADAMjMzMzMhwBIAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:57:10.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TwilioSettings.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Models\\Config\\TwilioSettings.cs",
+              "RelativeDocumentMoniker": "Models\\Config\\TwilioSettings.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Models\\Config\\TwilioSettings.cs",
+              "RelativeToolTip": "Models\\Config\\TwilioSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:49:44.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ContactModel.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Models\\ContactModel.cs",
+              "RelativeDocumentMoniker": "Models\\ContactModel.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Models\\ContactModel.cs",
+              "RelativeToolTip": "Models\\ContactModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:49:26.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAA8AAAAAzczMzMwmwBYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-15T18:47:28.956Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:44:59.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAADkAAACAzMzMzMwnwB8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:35:54.754Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TwilioSmsService.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Services\\Implementations\\TwilioSmsService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\TwilioSmsService.cs",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\Services\\Implementations\\TwilioSmsService.cs",
+              "RelativeToolTip": "Services\\Implementations\\TwilioSmsService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T18:35:40.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UserPortalValdiationsDBContext",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\UserPortalValdiationsDBContext.csproj",
+              "RelativeDocumentMoniker": "UserPortalValdiationsDBContext.csproj",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\UserPortalValidationExampleValidations9-12\\UserPortalValdiationsDBContext.csproj",
+              "RelativeToolTip": "UserPortalValdiationsDBContext.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-15T18:37:45.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

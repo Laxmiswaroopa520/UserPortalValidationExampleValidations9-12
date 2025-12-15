@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<UserPortalValdiationsDBContext.Services.UserCountByDepartment>
+
+<div id="departmentChart"></div>
+
+<!-- 🔄 Reset Button -->
+<button class="btn btn-sm btn-outline-secondary mt-2"
+        onclick="resetDepartmentFilter()">
+    🔄 Show All Users
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+    var chartData = @Html.Raw(
+        Newtonsoft.Json.JsonConvert.SerializeObject(
+            Model.Select(x => new {
+                Department = x.Department.ToString(), // enum → string
+                Count = x.Count
+            })
+        )
+    );
+
+    var options = {
+        chart: {
+            type: 'bar',
+            height: 300,
+            events: {
+                dataPointSelection: function (event, chartContext, config) {
+                    filterByDepartment(chartData[config.dataPointIndex].Department);
+                }
+            }
+        },
+        series: [{
+            name: 'Users',
+            data: chartData.map(x => x.Count)
+        }],
+        xaxis: {
+            categories: chartData.map(x => x.Department)
+        }
+    };
+
+    new ApexCharts(document.querySelector("#departmentChart"), options).render();
+
+    function filterByDepartment(dept) {
+        document.querySelectorAll("tbody tr").forEach(row => {
+            const rowDept = row.getAttribute("data-department");
+            row.style.display = rowDept === dept ? "" : "none";
+        });
+    }
+
+    function resetDepartmentFilter() {
+        document.querySelectorAll("tbody tr").forEach(row => {
+            row.style.display = "";
+        });
+    }
+</script>

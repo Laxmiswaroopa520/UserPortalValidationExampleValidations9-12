@@ -1,4 +1,5 @@
-﻿namespace UserPortalValdiationsDBContext.Models
+﻿//Data Seeding
+namespace UserPortalValdiationsDBContext.Models
 {
     public class Hobby
     {

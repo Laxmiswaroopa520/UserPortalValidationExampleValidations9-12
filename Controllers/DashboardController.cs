@@ -1,13 +1,9 @@
-﻿
-
-
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using UserPortalValdiationsDBContext.Filters;
 using UserPortalValdiationsDBContext.Interfaces;
 using UserPortalValdiationsDBContext.Models;
 using UserPortalValdiationsDBContext.ViewModels;
-
+using UserPortalValdiationsDBContext.Services.Interfaces;
 namespace UserPortalValdiationsDBContext.Controllers
 {
     [ServiceFilter(typeof(LoggingActionFilter))]
@@ -116,18 +112,40 @@ namespace UserPortalValdiationsDBContext.Controllers
 
             return View(vm);
         }
-
+        // this logic handles with years also 
         public IActionResult Birthdays()
         {
-            var users = UserService.GetAllUsers();
-            var upcoming = users
-                .Where(u => u.DateOfBirth.Month >= DateTime.Today.Month)
-                .OrderBy(u => u.DateOfBirth.Month)
-                .ThenBy(u => u.DateOfBirth.Day)
+            var today = DateTime.Today;
+
+            var upcoming = UserService.GetAllUsers()
+                .Where(u => u.DateOfBirth.HasValue)
+                .Select(u => new
+                {
+                    User = u,
+                    NextBirthday = new DateTime(
+                        today.Year,
+                        u.DateOfBirth!.Value.Month,
+                        u.DateOfBirth.Value.Day
+                    ) < today
+                    ? new DateTime(
+                        today.Year + 1,
+                        u.DateOfBirth.Value.Month,
+                        u.DateOfBirth.Value.Day
+                    )
+                    : new DateTime(
+                        today.Year,
+                        u.DateOfBirth.Value.Month,
+                        u.DateOfBirth.Value.Day
+                    )
+                })
+                .OrderBy(x => x.NextBirthday)
+                .Select(x => x.User)
                 .ToList();
 
             return View(upcoming);
         }
+
+
     }
 }
 

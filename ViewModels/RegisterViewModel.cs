@@ -1,7 +1,8 @@
-﻿//use new custom validations
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using UserPortalValdiationsDBContext.CustomValidations;
+using UserPortalValdiationsDBContext.Enums;
 using UserPortalValdiationsDBContext.Models;
 
 namespace UserPortalValdiationsDBContext.ViewModels
@@ -9,7 +10,7 @@ namespace UserPortalValdiationsDBContext.ViewModels
     public class RegisterViewModel
     {
         [Required]
-        [NotAdminUsername(ErrorMessage = "Admin username not allowed.")]
+        [NotAdminUsername]
         public string? Username { get; set; }
 
         [Required]
@@ -21,54 +22,62 @@ namespace UserPortalValdiationsDBContext.ViewModels
         [NoSequentialDigits]
         public string? Password { get; set; }
 
-        // AGE MUST BE BETWEEN 1–100
-        [Range(1, 100, ErrorMessage = "Age must be between 1 and 100.")]
-        [MinAge(18, ErrorMessage = "Minimum allowed age is 18.")]
-        [RegularExpression(@"^\d{1,3}$", ErrorMessage = "Age must be a whole number. Decimals are not allowed.")]
+        public IFormFile? ProfilePhoto { get; set; }
 
+        [Range(1, 100)]
+        [MinAge(18)]
         public int Age { get; set; }
 
         [PhoneNumber]
-        public string? Phone { get; set; } = "9985995256";
+        public string? Phone { get; set; }
 
-        // GENDER - RADIO BUTTONS
         [Required]
-        public string? Gender { get; set; } // Male, Female, Other
+        public Departments? Department { get; set; }
 
-                                                                // HOBBIES - CHECKBOXES
+        [Required]
+        public string? Gender { get; set; }
+
         public List<string>? Hobbies { get; set; }
 
-                                                          // DATE OF BIRTH – DATE PICKER + NO FUTURE DATE
         [Required]
-        [PastDate(ErrorMessage = "Date of birth cannot be in the future.")]
+        [PastDate]
         public DateTime DateOfBirth { get; set; }
 
-        // DROPDOWN LIST FOR COUNTRY
-        [Required(ErrorMessage = "Please select a country.")]
+        [Required]
         public string? Country { get; set; }
 
-        // REQUIRED CHECKBOX
-        [MustBeTrue(ErrorMessage = "You must accept terms and conditions.")]
+        [MustBeTrue]
         public bool AcceptTerms { get; set; }
 
+        // 🔑 ROLE (FROM DB)
+        [Required(ErrorMessage = "Please select a role")]
+        public int RoleId { get; set; }
 
-        // Converts ViewModel to User entity    (add a mapper)
-        public User ToUser()
+        // Dropdown source
+        public IEnumerable<SelectListItem>? Roles { get; set; }         //Data  Seeding..
+
+        // 🔄 MAPPER
+        public User ToUser(string? photoPath)
         {
             return new User
             {
-                Username = this.Username!,
-                Email = this.Email!,
-                Password = this.Password!,
-                Age = this.Age,
-                Phone = this.Phone,
-                Gender = this.Gender,
-                DateOfBirth = this.DateOfBirth,
-                Country = this.Country,
-                Hobbies = this.Hobbies != null ? string.Join(",", this.Hobbies) : string.Empty,
-                AcceptTerms = this.AcceptTerms
+                Username = Username!,
+                Email = Email!,
+                Password = Password!,
+
+                Age = Age,
+                Phone = Phone,
+                Department = Department,
+                Gender = Gender,
+                DateOfBirth = DateOfBirth,
+                Country = Country,
+                Hobbies = Hobbies != null ? string.Join(",", Hobbies) : null,
+                AcceptTerms = AcceptTerms,
+
+                RoleId = RoleId,
+                ProfilePhotoPath = photoPath,
+                Is2FAVerified = false   // default
             };
         }
     }
 }
-    

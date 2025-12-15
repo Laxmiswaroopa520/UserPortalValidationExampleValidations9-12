@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using UserPortalValdiationsDBContext.CustomValidations;
+using UserPortalValdiationsDBContext.Enums;
 
 namespace UserPortalValdiationsDBContext.Models
 {
@@ -25,52 +26,59 @@ namespace UserPortalValdiationsDBContext.Models
         public string? Password { get; set; }
 
         // AGE
-        [Range(1, 100, ErrorMessage = "Age must be between 1 and 100.")]
-        [MinAge(18, ErrorMessage = "Minimum allowed age is 18.")]
+        [Range(1, 100)]
+        [MinAge(18)]
         public int Age { get; set; }
 
-        // PHONE NUMBER
+        // PHONE
         [PhoneNumber]
         [NoSequentialDigits]
         public string? Phone { get; set; }
+
+        // DEPARTMENT (ENUM ✔)
+        public Departments? Department { get; set; }
 
         // GENDER
         [Required]
         public string? Gender { get; set; }
 
-        // DATE OF BIRTH
+        // DOB
         [Required]
-        [PastDate(ErrorMessage = "Date of birth cannot be in the future.")]
-        public DateTime DateOfBirth { get; set; }
+        [PastDate]
+        public DateTime? DateOfBirth { get; set; }
 
         // COUNTRY
-        [Required(ErrorMessage = "Please select a country.")]
+        [Required]
         public string? Country { get; set; }
 
-        // HOBBIES
+        // HOBBIES (comma separated)
         public string? Hobbies { get; set; }
 
         public bool AcceptTerms { get; set; }
 
-
-        // -------------------------------------------------------------------
-        // 🔥 NEW FIELDS FOR VIEW COMPONENTS (ADDED WITHOUT REMOVING ANYTHING)
-        // -------------------------------------------------------------------
-
-        public string? ProfilePhotoPath { get; set; } = "/images/profiles/default.png";
-
+        // -------------------------
+        // 🔐 SECURITY / AUDIT
+        // -------------------------
         public DateTime? LastLoginAt { get; set; }
-
         public DateTime? LastPasswordChangeAt { get; set; }
 
-        /// <summary>
-        /// Example: "Admin,Manager,HR"
-        /// </summary>
-        public string? Roles { get; set; } = "User";
+       // public bool Is2FAVerified { get; set; }   // 🔥 FOR ROLE-SENSITIVE LOGIN
 
-        /// <summary>
-        /// For Department Count ViewComponent
-        /// </summary>
-        public string? Department { get; set; } = "General";
+        // -------------------------
+        // 📸 PROFILE
+        // -------------------------
+        public string? ProfilePhotoPath { get; set; }
+
+        // -------------------------
+        // 🔑 ROLE (DB-DRIVEN ✔)
+        // -------------------------
+        public int RoleId { get; set; }           // FK
+        public Role Role { get; set; } = null!;
+
+
+        public bool Is2FAVerified { get; set; }   // OTP verification status
+        public string? TwoFactorCode { get; set; } // OTP
+        public DateTime? TwoFactorExpiry { get; set; } // OTP expiration
+        public string? LastLoginIP { get; set; }  // For Manager IP checks
     }
 }

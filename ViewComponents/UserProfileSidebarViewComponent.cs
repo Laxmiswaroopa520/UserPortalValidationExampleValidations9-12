@@ -1,28 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UserPortalValdiationsDBContext.Interfaces;
+using UserPortalValdiationsDBContext.Services.Interfaces;
 
-public class UserProfileSidebarViewComponent : ViewComponent
+namespace UserPortalValdiationsDBContext.ViewComponents
 {
-    private readonly IUserService _userService;
-
-    public UserProfileSidebarViewComponent(IUserService userService)
+    public class UserProfileSidebarViewComponent : ViewComponent
     {
-        _userService = userService;
-    }
+        private readonly IUserService _userService;
 
-    public IViewComponentResult Invoke(string? userId)
-    {
-        if (string.IsNullOrEmpty(userId))
+        public UserProfileSidebarViewComponent(IUserService userService)
         {
-            return Content("No user logged in.");
+            _userService = userService;
         }
 
-        var user = _userService.GetUserByUsername(userId);
-        if (user == null)
+        public IViewComponentResult Invoke(string? userId)
         {
-            return Content("User not found.");
-        }
+            if (string.IsNullOrEmpty(userId))
+                return Content("");
 
-        return View(user);
+            var vm = _userService.GetUserProfileSidebar(userId);
+
+            if (vm == null)
+                return Content("");
+
+            return View(vm);
+        }
     }
 }

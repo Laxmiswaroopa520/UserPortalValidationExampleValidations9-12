@@ -2,62 +2,63 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using UserPortalValdiationsDBContext.Services;
-using UserPortalValdiationsDBContext.Interfaces;
+using UserPortalValdiationsDBContext.DTO;   // updated namespace
+using UserPortalValdiationsDBContext.Services.Interfaces;
 
 namespace UserPortalValdiationsDBContext.Filters
 {
-    public class AuditingFilter : IAsyncActionFilter
+    public class AuditingFilter : IAsyncActionFilter            //it implenets asyncaction filters so it runs before and after method exectures..
     {
-        private readonly IAuditService _audit;
+        private readonly IAuditService _auditService;
         private readonly ILogger<AuditingFilter> _logger;
 
-        public AuditingFilter(IAuditService auditService, ILogger<AuditingFilter> logger)
+        public AuditingFilter(
+            IAuditService auditService,
+            ILogger<AuditingFilter> logger)
         {
-            _audit = auditService;
+            _auditService = auditService;
             _logger = logger;
         }
 
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public async Task OnActionExecutionAsync(
+            ActionExecutingContext context,
+            ActionExecutionDelegate next)
         {
-            var user = context.HttpContext.User?.Identity?.Name ?? "Anonymous";
-            var action = context.ActionDescriptor.DisplayName;
-            var started = DateTime.UtcNow;
+            var startedAt = DateTime.UtcNow;            //notes start time
 
-            var executed = await next();
+            var executedContext = await next();             //controller runs,service run and database calls happen
 
-            var ended = DateTime.UtcNow;
-            var audit = new AuditEntry
+            var endedAt = DateTime.UtcNow;
+
+            var audit = new AuditEntry              //building the audit record
             {
-                UserName = user,
-                Action = action,
-                StartedAt = started,
-                EndedAt = ended,
+                UserName = context.HttpContext.User?.Identity?.Name ?? "Anonymous",
+                Action = context.ActionDescriptor.DisplayName,
+                StartedAt = startedAt,
+                EndedAt = endedAt,
                 HttpMethod = context.HttpContext.Request.Method,
                 Path = context.HttpContext.Request.Path,
-                Success = executed.Exception == null
+                Success = executedContext.Exception == null
             };
 
             try
             {
-                await _audit.SaveAsync(audit);
+                await _auditService.SaveAsync(audit);           //saves audit data safely
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Failed to persist audit entry");
+                _logger.LogWarning(ex, "Audit logging failed");
             }
         }
     }
-
-    // small DTO, can move to Models/AuditEntry.cs
-    public class AuditEntry
-    {
-        public string? UserName { get; set; }
-        public string? Action { get; set; }
-        public DateTime StartedAt { get; set; }
-        public DateTime EndedAt { get; set; }
-        public string? HttpMethod { get; set; }
-        public string? Path { get; set; }
-        public bool Success { get; set; }
-    }
 }
+
+/*🧠 High-Level Purpose
+
+The purpose of this Auditing Filter is to:
+
+ Track user activity
+ Record important actions
+ Measure execution time
+ Detect failures or exceptions
+Support security, compliance, and debugging*/

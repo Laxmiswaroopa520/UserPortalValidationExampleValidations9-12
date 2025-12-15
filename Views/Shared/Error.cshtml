@@ -1,25 +1,274 @@
-﻿@model ErrorViewModel
+﻿@{
+    ViewData["Title"] = "Unexpected Error";
+    Layout = "_Layout"; // keep layout for branding
+}
+
+<text>
+    <style>
+        body {
+            background: #f2f6fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .error-wrapper {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-card {
+            background: #ffffff;
+            max-width: 700px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 50px 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @@keyframes shake {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+
+            20% {
+                transform: rotate(-10deg);
+            }
+
+            40% {
+                transform: rotate(10deg);
+            }
+
+            60% {
+                transform: rotate(-10deg);
+            }
+
+            80% {
+                transform: rotate(10deg);
+            }
+        }
+
+        .error-icon {
+            font-size: 80px;
+            color: #dc3545;
+            animation: shake 1s infinite;
+        }
+
+        .error-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 20px;
+            color: #dc3545;
+        }
+
+        .error-subtitle {
+            color: #6c757d;
+            margin-top: 15px;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .error-id-box {
+            margin-top: 25px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            font-size: 14px;
+            color: #495057;
+            word-break: break-word;
+        }
+
+        .error-actions {
+            margin-top: 30px;
+        }
+
+            .error-actions .btn {
+                min-width: 160px;
+                padding: 10px 20px;
+                font-weight: 600;
+                transition: all 0.3s;
+            }
+
+            .error-actions .btn-primary:hover {
+                background-color: #b02a37;
+                border-color: #b02a37;
+            }
+
+            .error-actions .btn-outline-secondary:hover {
+                background-color: #6c757d;
+                color: #fff;
+                border-color: #6c757d;
+            }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #adb5bd;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</text>
+
+<div class="error-wrapper">
+    <div class="error-card">
+        <div class="error-icon">⚠</div>
+        <h2 class="error-title">Oops! Something went wrong</h2>
+        <p class="error-subtitle">
+            We’re sorry — an unexpected error occurred while processing your request.<br />
+            Our team has been notified and is working on it.
+        </p>
+
+        @if (ViewData["ErrorId"] != null)
+        {
+            <div class="error-id-box">
+                <strong>Error Reference ID:</strong><br />
+                <code>@ViewData["ErrorId"]</code>
+            </div>
+        }
+
+        <div class="error-actions d-flex justify-content-center gap-3">
+            <a href="/Account/Login" class="btn btn-primary">Go to Login</a>
+            <button class="btn btn-outline-secondary" onclick="reloadPage()">Try Again</button>
+        </div>
+
+        <div class="footer-text">
+            If the problem persists, please contact support with the error reference ID.
+        </div>
+
+        <canvas id="particles" class="particles"></canvas>
+    </div>
+</div>
+
+<script>
+    function reloadPage() {
+        location.reload();
+    }
+
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particlesArray;
+
+    function resizeCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    }
+
+    class Particle {
+        constructor(x, y, size, speedX, speedY) {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.speedX = speedX;
+            this.speedY = speedY;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.y > canvas.height) this.y = 0;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(220,53,69,0.2)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particlesArray = [];
+        for(let i=0; i<40; i++) {
+            let size = Math.random()*3 + 1;
+            let x = Math.random()*canvas.width;
+            let y = Math.random()*canvas.height;
+            let speedX = Math.random()*0.5 - 0.25;
+            let speedY = Math.random()*0.5 - 0.25;
+            particlesArray.push(new Particle(x, y, size, speedX, speedY));
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    resizeCanvas();
+    initParticles();
+    animateParticles();
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        initParticles();
+    });
+</script>
+
+
+
+
+
+@*
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "Something went wrong";
+    Layout = "_Layout"; // or set to null if you don't want layout
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="container mt-5 text-center">
+    <h1 class="text-danger">⚠ Oops! Something went wrong</h1>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    <p class="mt-3 text-muted">
+        An unexpected error occurred while processing your request.
     </p>
-}
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+    <p class="text-muted">
+        Please try again later or contact the administrator.
+    </p>
+
+    @if (ViewData["ErrorId"] != null)
+    {
+        <p class="text-muted mt-3">
+            Error Reference ID:
+            <strong>@ViewData["ErrorId"]</strong>
+        </p>
+    }
+
+    <div class="mt-4">
+        <a href="/Account/Login" class="btn btn-primary me-2">
+            Go to Login
+        </a>
+
+        <a href="javascript:history.back()" class="btn btn-secondary">
+            Go Back
+        </a>
+    </div>
+</div>
+*@

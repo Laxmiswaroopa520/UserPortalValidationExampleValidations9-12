@@ -1,86 +1,118 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
+using System.Reflection;
 using UserPortalValdiationsDBContext.Data;
 using UserPortalValdiationsDBContext.Filters;
+// 🔹 Other Services
 using UserPortalValdiationsDBContext.Interfaces;
+using UserPortalValdiationsDBContext.Models.Config;
+using UserPortalValdiationsDBContext.Repository.Implementations;
+// 🔹 Repositories & UoW
+using UserPortalValdiationsDBContext.Repository.Interfaces;
 using UserPortalValdiationsDBContext.Services;
+using UserPortalValdiationsDBContext.Services.Implementations;
+// 🔹 Services
+using UserPortalValdiationsDBContext.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ---------------------------
-// Add Controllers with Global Filters
+// Controllers + Global Filters
 // ---------------------------
 builder.Services.AddControllersWithViews(options =>
 {
-    // Global filters
-    options.Filters.Add<ErrorHandlingFilter>();      // Global exception handling
-    options.Filters.Add<LoggingActionFilter>();      // Logs all actions
-    options.Filters.Add<ResponseResultFilter>();     // Wrap API responses in standard format
-    options.Filters.Add<ActionValidationFilter>();   // Validate ModelState globally
+    options.Filters.Add<ErrorHandlingFilter>();
+    options.Filters.Add<LoggingActionFilter>();
+    options.Filters.Add<ResponseResultFilter>();
+    options.Filters.Add<ActionValidationFilter>();
 });
-
+builder.Services.Configure<TwilioSettings>(
+    builder.Configuration.GetSection("Twilio"));            //Twilio Settings for role based access
+// This binds appsettings.json → TwilioSettings class
 // ---------------------------
-// Authentication
+// Authentication & Authorization
 // ---------------------------
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Account/Login";
         options.LogoutPath = "/Account/Logout";
+        options.AccessDeniedPath = "/Account/AccessDenied";
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("ManagerOnly", policy => policy.RequireRole("Manager"));
+});
 
 // ---------------------------
 // Database Context
 // ---------------------------
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 // ---------------------------
-// App Services
+// Repositories
+// ---------------------------
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IUserActivityRepository, UserActivityRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+// Audit
+builder.Services.AddScoped<IAuditRepository, AuditRepository>();
+builder.Services.AddScoped<IAuditService, AuditService>();
+builder.Services.AddScoped<ISmsService, TwilioSmsService>();            //Sms service (Twilio Service)
+
+
+// ---------------------------
+// Unit Of Work
+// ---------------------------
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// ---------------------------
+// Application Services
 // ---------------------------
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserActivityService, UserActivityService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+
 
 // ---------------------------
-// Filters with Dependency Injection
+// Filters (DI)
 // ---------------------------
-
-// LoggingActionFilter depends on ILogger<LoggingActionFilter> (automatically provided by DI)
 builder.Services.AddScoped<LoggingActionFilter>();
-
-// AuditingFilter depends on IAuditService and ILogger<AuditingFilter> (ILogger automatically injected)
 builder.Services.AddScoped<AuditingFilter>();
-
-// ErrorHandlingFilter depends on ILogger<ErrorHandlingFilter>
 builder.Services.AddScoped<ErrorHandlingFilter>();
-
-// ActionValidationFilter has no dependencies
 builder.Services.AddScoped<ActionValidationFilter>();
-
-// ResultCacheFilter depends on IMemoryCache; default duration = 10 sec
-builder.Services.AddMemoryCache(); // required for ResultCacheFilter
-builder.Services.AddScoped<ResultCacheFilter>();
-
-// ResponseResultFilter has no dependencies (or inject what it needs)
 builder.Services.AddScoped<ResponseResultFilter>();
 
 // ---------------------------
-// Supporting Services
+// Caching & Supporting Services
 // ---------------------------
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<ResultCacheFilter>();
+builder.Services.AddMemoryCache(); // required
 builder.Services.AddSingleton<ICacheService, CacheService>();
-builder.Services.AddSingleton<IAuditService, AuditService>();
 
 // ---------------------------
-// Build and Configure App
+// Build App
 // ---------------------------
 var app = builder.Build();
 
+// ---------------------------
+// Middleware Pipeline
+// ---------------------------
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -90,85 +122,66 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
-app.UseAuthorization();
-
-// Default route
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Account}/{action=Register}/{id?}");
-
-app.Run();
-
-
-
-
-/*using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
-using UserPortalValdiationsDBContext.Data;
-using UserPortalValdiationsDBContext.Filters;
-using UserPortalValdiationsDBContext.Interfaces;
-using UserPortalValdiationsDBContext.Services;
-var builder = WebApplication.CreateBuilder(args);
-
-//builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();                    //enables razor view files(.cshtml) :to be recompiled .so that, it will show the changes without restarting the app.
-builder.Services.AddControllersWithViews(options =>
+//app.UseAuthorization();
+builder.Services.AddAuthorization(options =>
 {
-    // Global Filters
-    options.Filters.Add<ErrorHandlingFilter>();     // Global exception handling
-    options.Filters.Add<LoggingActionFilter>();      // Logs all actions
-    options.Filters.Add<ResponseResultFilter>();     // Wraps API responses in standard format
+    // Role-based
+    options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
+
+    // Policy-based: Admin must be 2FA verified
+    options.AddPolicy("Admin2FA", policy =>
+        policy.RequireAssertion(ctx =>
+            ctx.User.IsInRole("Admin") &&
+            ctx.User.HasClaim("Is2FAVerified", "true")
+        ));
+
+    // Manager policy: OTP + IP check
+    options.AddPolicy("ManagerExtraCheck", policy =>
+        policy.RequireAssertion(ctx =>
+            ctx.User.IsInRole("Manager") &&
+            ctx.User.HasClaim("Is2FAVerified", "true") &&
+            ctx.User.HasClaim("LoginIP", ctx.User.FindFirst("LoginIP")?.Value ?? "")
+        ));
 });
 
-// Add Cookie Authentication
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/Account/Login"; // redirect here if not authenticated
-        options.LogoutPath = "/Account/Logout"; // optional
-    });
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// register services for filters
-builder.Services.AddSingleton<ICacheService, CacheService>();
-builder.Services.AddSingleton<IAuditService, AuditService>();
-
-builder.Services.AddScoped<ResponseResultFilter>();
-builder.Services.AddMemoryCache();
-
-builder.Services.AddScoped<ActionValidationFilter>();
-builder.Services.AddScoped<AuditingFilter>();
-builder.Services.AddScoped<ResultCacheFilter>();   // already injects IMemoryCache
-
-
-
-
-//register services for normal services.
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAddressService, AddressService>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IContactService, ContactService>();
-builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IUserActivityService, UserActivityService>();
-
-//used for sending real emails..
-
-
-
-var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-}
-
-app.UseStaticFiles();
-app.UseRouting();
-app.UseAuthorization();
-
+// ---------------------------
+// Routes
+// ---------------------------
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Register}/{id?}");
 
 app.Run();
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

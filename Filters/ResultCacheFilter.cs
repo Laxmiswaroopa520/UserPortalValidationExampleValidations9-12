@@ -8,7 +8,8 @@ namespace UserPortalValdiationsDBContext.Filters
     public class ResultCacheFilter : IResultFilter
     {
         private readonly IMemoryCache _cache;
-        private readonly TimeSpan _duration = TimeSpan.FromSeconds(10);
+        //  private readonly TimeSpan _duration = TimeSpan.FromSeconds(10);
+        private readonly TimeSpan _duration = TimeSpan.FromMinutes(2);
 
         public ResultCacheFilter(IMemoryCache cache)
         {
@@ -54,9 +55,31 @@ namespace UserPortalValdiationsDBContext.Filters
 }
 
 
+/*Result Filters are used to intercept, inspect, modify, or replace the FINAL RESPONSE just before it is sent to the client.*/
+
+/*Request
+   ↓
+Authorization Filters
+   ↓
+Action Filters
+   ↓
+ACTION METHOD (Controller logic)
+   ↓
+Result Filters   👈 YOU ARE HERE
+   ↓
+Response sent to Browser / Client
+*/
+
+/*ResultCacheFilter exists to avoid executing the SAME expensive code again and again when the OUTPUT is the SAME.*/
+
+// Result Filters run AFTER the action method has executed
+// They deal ONLY with IActionResult / ObjectResult / ViewResult
 
 
 
+/*Its main goal is to cache the results of controller actions in memory 
+ * for a short period of time, so that repeated requests for the same URL do not trigger the action logic again and again.
+ * */
 
 
 

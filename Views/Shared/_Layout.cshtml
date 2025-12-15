@@ -2,7 +2,7 @@
 @using UserPortalValdiationsDBContext.Interfaces
 @using UserPortalValdiationsDBContext.Services
 @inject IWebHostEnvironment Env
-@inject UserPortalValdiationsDBContext.Interfaces.IUserService UserService
+@inject UserPortalValdiationsDBContext.Services.Interfaces.IUserService UserService
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +30,32 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid white;
+        }
+
+        .sidebar-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 90px;
+        }
+
+            .sidebar-card hr {
+                margin: 16px 0;
+            }
+
+        .badge {
+            font-size: 11px;
+        }
+
+        .sidebar-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 90px;
         }
 
         .sidebar {
@@ -87,30 +113,36 @@
     </nav>
 
     <!-- Main Content with Sidebar -->
-    <div class="container mt-3">
+    <div class="container mt-4">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3">
-                <div class="sidebar">
-                    <h6>Profile Info</h6>
-                    @* User profile sidebar as ViewComponent *@
-                    @await Component.InvokeAsync("UserProfileSidebar", new { userId = User.Identity?.Name })
 
-                    <hr />
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <div class="col-md-3">
+                    <div class="sidebar-card">
+                        @await Component.InvokeAsync("UserProfileSidebar", new { userId = User.Identity.Name })
 
-                    <h6>Department Stats</h6>
-                    @* Department count view component *@
-                    @await Component.InvokeAsync("DepartmentCount")
+                        <hr />
+
+                        @await Component.InvokeAsync("DepartmentCount")
+                    </div>
                 </div>
-            </div>
+            }
 
-            <!-- Main View Content -->
-            <div class="col-md-9">
+            <div class="col-md-@(User.Identity.IsAuthenticated ? "9" : "12")">
                 @RenderBody()
             </div>
+
         </div>
     </div>
 
+
+
+
+
+
+
+   
     <!-- Footer -->
     <footer class="text-center py-3">
         &copy; @DateTime.Now.Year UserPortalPOC. All Rights Reserved.

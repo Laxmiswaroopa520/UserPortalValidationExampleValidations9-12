@@ -1,4 +1,5 @@
-﻿namespace UserPortalValdiationsDBContext.Models
+﻿// EF Core entity for DB persistence
+namespace UserPortalValdiationsDBContext.Models
 {
     public class AuditLog
     {

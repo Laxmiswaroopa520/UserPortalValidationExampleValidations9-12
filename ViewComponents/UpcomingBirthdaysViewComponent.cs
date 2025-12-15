@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UserPortalValdiationsDBContext.Interfaces;
+using UserPortalValdiationsDBContext.Services.Interfaces;
 
 namespace UserPortalValdiationsDBContext.ViewComponents
 {

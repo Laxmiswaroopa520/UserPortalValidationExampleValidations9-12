@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<UserPortalValdiationsDBContext.Models.User>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-muted text-center">
+        🎉 No birthdays this month
+    </div>
+}
+else
+{
+    <div id="birthdayCarousel"
+         class="carousel slide"
+         data-bs-ride="carousel"
+         data-bs-interval="3000">
+
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            @{
+                int idx = 0;
+                foreach (var _ in Model)
+                {
+                    <button type="button"
+                            data-bs-target="#birthdayCarousel"
+                            data-bs-slide-to="@idx"
+                            class="@(idx == 0 ? "active" : "")">
+                    </button>
+                    idx++;
+                }
+            }
+        </div>
+
+        <!-- Slides -->
+        <div class="carousel-inner text-center">
+            @{
+                int i = 0;
+                foreach (var u in Model)
+                {
+                    <div class="carousel-item @(i++ == 0 ? "active" : "")">
+                        <img src="@(string.IsNullOrEmpty(u.ProfilePhotoPath)
+                                                                      ? "/images/default-user.png"
+                                                                      : u.ProfilePhotoPath)"
+                             class="rounded-circle mb-2"
+                             width="80"
+                             height="80" />
+
+                        <h6 class="mb-0">@u.Username</h6>
+                        <small class="text-muted">
+                            🎂 @(u.DateOfBirth.HasValue
+                                            ? u.DateOfBirth.Value.ToString("MMM dd")
+                                : "N/A")
+                        </small>
+                    </div>
+                }
+            }
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#birthdayCarousel"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#birthdayCarousel"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+}

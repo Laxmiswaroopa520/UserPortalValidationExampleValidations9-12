@@ -168,7 +168,11 @@
                     Create Your Account
                 </h3>
 
-                <form asp-action="Register" method="post" autocomplete="off" >
+                    <form asp-action="Register"
+                          method="post"
+                          enctype="multipart/form-data"
+                          autocomplete="off">
+                          <!--enctype supports image uploads-->
                     <!-- Username -->
                     <div class="mb-3">
                         <label class="form-label">Username *</label>
@@ -195,6 +199,12 @@
                         </div>
                         <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
 
                     <!-- Age -->
                     <div class="mb-3">
@@ -212,7 +222,17 @@
                     </div>
 
                     <!-- Date of Birth -->
+                    <label class="form-label">DateOfBirth *</label><br />
                     <input asp-for="DateOfBirth" type="date" class="form-control" max="@DateTime.Now.ToString("yyyy-MM-dd")" value="@(Model.DateOfBirth == DateTime.MinValue ? DateTime.Today.ToString("yyyy-MM-dd") : Model.DateOfBirth.ToString("yyyy-MM-dd"))" />
+
+                    <!--image uploads-->
+                    <div class="mb-3">
+                        <label class="form-label">Profile Photo</label>
+                        <input asp-for="ProfilePhoto"
+                               type="file"
+                               class="form-control"
+                               accept="image/*" />
+                    </div>
 
                     <!-- Country Dropdown -->
                     <div class="mb-3">
@@ -244,6 +264,30 @@
                                 @hobby
                             </label>
                         }
+                    </div>
+
+                    <!-- Department -->
+                    <div class="mb-3">
+                        <label class="form-label">Department *</label>
+
+                        <select asp-for="Department" class="form-control"
+                                asp-items="Html.GetEnumSelectList<UserPortalValdiationsDBContext.Enums.Departments>()">
+                            <option value="">-- Select Department --</option>
+                        </select>
+
+                        <span asp-validation-for="Department" class="text-danger"></span>
+                    </div>
+                    <!--roles -->
+                    <div class="mb-3">
+                        <label class="form-label">Role *</label>
+
+                        <select asp-for="RoleId"
+                                class="form-control"
+                                asp-items="Model.Roles">
+                            <option value="">-- Select Role --</option>
+                        </select>
+
+                        <span asp-validation-for="RoleId" class="text-danger"></span>
                     </div>
 
 

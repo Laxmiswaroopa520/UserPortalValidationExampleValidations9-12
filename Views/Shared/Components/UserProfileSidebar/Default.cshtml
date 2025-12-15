@@ -1,7 +1,64 @@
-﻿@model UserPortalValdiationsDBContext.Models.User
+﻿@model UserPortalValdiationsDBContext.ViewModels.UserProfileSidebarViewModel
 
-<div class="text-center">
-    <img src="@Model.ProfilePhotoPath" class="profile-icon mb-2" />
-    <p>@Model.Username</p>
-    <small>@Model.Roles</small>
+<div class="text-center mb-3">
+    <img src="@Model.ProfilePhotoPath"
+         class="rounded-circle shadow-sm mb-2"
+         style="width:80px;height:80px;object-fit:cover;" />
+
+    <h6 class="fw-bold mb-0">@Model.Name</h6>
+    <small class="text-muted">@Model.Email</small>
+
+    <div class="mt-2">
+        @foreach (var role in Model.Roles)
+        {
+            <span class="badge bg-primary me-1">@role</span>
+        }
+    </div>
 </div>
+
+<hr />
+
+<!-- 🔹 Last Login -->
+<div class="mb-2">
+    <small class="text-muted fw-semibold">Last Login</small><br />
+    @if (Model.RecentLogins.Any())
+    {
+        <span class="small">
+            @Model.RecentLogins.First().ToString("dd MMM yyyy, hh:mm tt")
+        </span>
+    }
+    else
+    {
+        <span class="small text-muted">No data</span>
+    }
+</div>
+
+<!-- 🔹 Birthday -->
+@if (Model.UpcomingBirthday != null)
+{
+    <div class="alert alert-info py-2 px-2 mt-2 mb-2">
+        🎂 <strong>@Model.UpcomingBirthday.Name</strong><br />
+        <small>
+            @Model.UpcomingBirthday.Date.ToString("dd MMM")
+            (in @Model.UpcomingBirthday.DaysRemaining days)
+        </small>
+    </div>
+}
+
+<hr />
+
+<!-- 🔹 Quick Actions -->
+<div class="d-grid gap-2">
+    <a asp-controller="Account"
+       asp-action="EditProfile"
+       class="btn btn-outline-primary btn-sm">
+        Edit Profile
+    </a>
+
+    <a asp-controller="Account"
+       asp-action="ChangePassword"
+       class="btn btn-outline-secondary btn-sm">
+        Change Password
+    </a>
+</div>
+

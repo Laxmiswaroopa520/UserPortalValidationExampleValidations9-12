@@ -130,6 +130,45 @@ namespace UserPortalValdiationsDBContext.Migrations
                         });
                 });
 
+            modelBuilder.Entity("UserPortalValdiationsDBContext.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "User"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Manager"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "HR"
+                        });
+                });
+
             modelBuilder.Entity("UserPortalValdiationsDBContext.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -151,8 +190,8 @@ namespace UserPortalValdiationsDBContext.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Department")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -164,6 +203,9 @@ namespace UserPortalValdiationsDBContext.Migrations
 
                     b.Property<string>("Hobbies")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Is2FAVerified")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastLoginAt")
                         .HasColumnType("datetime2");
@@ -181,8 +223,8 @@ namespace UserPortalValdiationsDBContext.Migrations
                     b.Property<string>("ProfilePhotoPath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Roles")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -190,7 +232,20 @@ namespace UserPortalValdiationsDBContext.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("UserPortalValdiationsDBContext.Models.User", b =>
+                {
+                    b.HasOne("UserPortalValdiationsDBContext.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

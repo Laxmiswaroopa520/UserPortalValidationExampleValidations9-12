@@ -7,8 +7,10 @@
 <ul class="list-group">
     @foreach (var user in Model)
     {
-        <li class="list-group-item">
-            @user.Username - @user.DateOfBirth.ToString("MMM dd")
+    <li class="list-group-item">
+        @user.Username - @(user.DateOfBirth.HasValue
+                ? user.DateOfBirth.Value.ToString("MMM dd")
+                : "N/A")
         </li>
     }
 </ul>

@@ -10,7 +10,7 @@ namespace UserPortalValdiationsDBContext.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Hobby> Hobbies { get; set; }           //perform data seeding 
-
+        public DbSet<Role> Roles { get; set; }              //Data Seeding for role based authorization
         public DbSet<ContactModel> Contacts { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
@@ -44,13 +44,20 @@ namespace UserPortalValdiationsDBContext.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Hobby>().HasData(
+            modelBuilder.Entity<Hobby>().HasData(               //Data Seeding for hobbies
                 new Hobby { Id = 1, Name = "Cricket" },
                 new Hobby { Id = 2, Name = "Music" },
                 new Hobby { Id = 3, Name = "Travel" },
                 new Hobby { Id = 4, Name = "Reading" }
             );
+            modelBuilder.Entity<Role>().HasData(        //Data Seeding for roles
+                new Role { Id = 1, Name = "User" },
+                new Role { Id = 2, Name = "Admin" },
+                new Role { Id = 3, Name = "Manager" },
+                new Role { Id = 4, Name = "HR" }
+            );
         }
+
 
     }
 }
