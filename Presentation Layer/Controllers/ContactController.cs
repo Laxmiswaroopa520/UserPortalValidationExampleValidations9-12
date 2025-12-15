@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UserPortalValdiationsDBContext.Constants;
 using UserPortalValdiationsDBContext.Filters;
-using UserPortalValdiationsDBContext.Interfaces;
 using UserPortalValdiationsDBContext.Models;
 using UserPortalValdiationsDBContext.Services.Interfaces;
+<<<<<<< HEAD:Controllers/ContactController.cs
 
 namespace UserPortalValdiationsDBContext.Controllers
 {
@@ -83,6 +83,8 @@ using UserPortalValdiationsDBContext.Filters;
 using UserPortalValdiationsDBContext.Interfaces;
 using UserPortalValdiationsDBContext.Models;
 using UserPortalValdiationsDBContext.Services.Interfaces;
+=======
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Controllers/ContactController.cs
 
 namespace UserPortalValdiationsDBContext.Controllers
 {

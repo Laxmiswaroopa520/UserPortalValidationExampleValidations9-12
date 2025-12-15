@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UserPortalValdiationsDBContext.Filters;
-using UserPortalValdiationsDBContext.Interfaces;
 using UserPortalValdiationsDBContext.Models;
+using UserPortalValdiationsDBContext.Services.Interfaces;
 using UserPortalValdiationsDBContext.ViewModels;
 using UserPortalValdiationsDBContext.Services.Interfaces;
 namespace UserPortalValdiationsDBContext.Controllers

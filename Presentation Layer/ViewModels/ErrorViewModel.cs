@@ -1,4 +1,4 @@
-namespace UserPortalValdiationsDBContext.Models
+namespace UserPortalValdiationsDBContext.ViewModels
 {
     public class ErrorViewModel
     {

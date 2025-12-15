@@ -2,7 +2,11 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+<<<<<<< HEAD:Filters/AuditingFilter.cs
 using UserPortalValdiationsDBContext.DTO;   // updated namespace
+=======
+using UserPortalValdiationsDBContext.Interfaces;
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Filters/AuditingFilter.cs
 using UserPortalValdiationsDBContext.Services.Interfaces;
 
 namespace UserPortalValdiationsDBContext.Filters

@@ -1,10 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+<<<<<<< HEAD:Controllers/AccountController.cs
 using System.Security.Claims;
 using UserPortalValdiationsDBContext.Filters;
 using UserPortalValdiationsDBContext.Models;
 using UserPortalValdiationsDBContext.Services.Implementations;
+=======
+using UserPortalValdiationsDBContext.Enums;
+using UserPortalValdiationsDBContext.Filters;
+using UserPortalValdiationsDBContext.Models;
+using UserPortalValdiationsDBContext.Repository.Interfaces;
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Controllers/AccountController.cs
 using UserPortalValdiationsDBContext.Services.Interfaces;
 using UserPortalValdiationsDBContext.ViewModels;
 
@@ -13,6 +20,7 @@ namespace UserPortalValdiationsDBContext.Controllers
     [ServiceFilter(typeof(LoggingActionFilter))]
     [ServiceFilter(typeof(AuditingFilter))]
     [ServiceFilter(typeof(ErrorHandlingFilter))]
+<<<<<<< HEAD:Controllers/AccountController.cs
     [ServiceFilter(typeof(ActionValidationFilter))]
     public class AccountController : Controller
     {
@@ -31,11 +39,26 @@ namespace UserPortalValdiationsDBContext.Controllers
             _authService = authService;
             _userService = userService;
             _smsService = smsService;
+=======
+    public class AccountController : Controller
+    {
+        private readonly IAccountService _accountService;
+        private readonly IUnitOfWork _unit;
+
+        public AccountController(IAccountService accountService, IUnitOfWork unit)
+        {
+            _accountService = accountService;
+            _unit = unit;
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Controllers/AccountController.cs
         }
 
         // ---------------- REGISTER ----------------
 
         [HttpGet]
+<<<<<<< HEAD:Controllers/AccountController.cs
+=======
+        [ServiceFilter(typeof(ResultCacheFilter))]
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Controllers/AccountController.cs
         public IActionResult Register()
         {
             var model = new RegisterViewModel
@@ -48,14 +71,21 @@ namespace UserPortalValdiationsDBContext.Controllers
         }
 
         [HttpPost]
+<<<<<<< HEAD:Controllers/AccountController.cs
+=======
+        [ServiceFilter(typeof(ActionValidationFilter))]
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Controllers/AccountController.cs
         public IActionResult Register(RegisterViewModel model)
         {
             model.Roles = _accountService.GetRolesDropdown();
             LoadDropdowns();
 
+<<<<<<< HEAD:Controllers/AccountController.cs
             if (!ModelState.IsValid)
                 return View(model);
 
+=======
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Controllers/AccountController.cs
             if (_accountService.IsEmailExists(model.Email!))
             {
                 ModelState.AddModelError("Email", "Email already exists");
@@ -71,6 +101,7 @@ namespace UserPortalValdiationsDBContext.Controllers
             // ---------- PROFILE PHOTO ----------
             string profilePhotoPath = "/images/default-profile.png";
 
+<<<<<<< HEAD:Controllers/AccountController.cs
             if (model.ProfilePhoto != null && model.ProfilePhoto.Length > 0)
             {
                 var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/users");
@@ -106,6 +137,9 @@ namespace UserPortalValdiationsDBContext.Controllers
             };
 
             _accountService.RegisterUser(user);
+=======
+            _accountService.RegisterUser(newUser);
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Controllers/AccountController.cs
             return RedirectToAction("Login");
         }
 
@@ -301,8 +335,17 @@ namespace UserPortalValdiationsDBContext.Controllers
 
         private void LoadDropdowns()
         {
+<<<<<<< HEAD:Controllers/AccountController.cs
             ViewBag.Countries = _accountService.GetCountries();
             ViewBag.HobbiesList = _accountService.GetHobbies();
+=======
+            ViewBag.Countries = Enum.GetNames(typeof(CountryEnum)).ToList();
+
+            // Hobby list now comes from Repository → UoW
+            ViewBag.HobbiesList = _unit.Hobbies.GetAll()
+                .Select(h => h.Name)
+                .ToList();
+>>>>>>> 434e4f68b63bd11e3b7b38789add7bc53265a4dc:Presentation Layer/Controllers/AccountController.cs
         }
 
         // ---------------- AUTHORIZATION ----------------
@@ -337,13 +380,6 @@ Auditing
 ❌ Avoid if:
 
 Some actions don’t need validation (GET requests mostly)*/
-
-
-
-
-
-
-
 
 
 
